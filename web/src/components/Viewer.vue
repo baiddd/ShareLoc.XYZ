@@ -63,7 +63,11 @@
                       <md-icon>share</md-icon>Share
                       <md-tooltip>share this smlm file</md-tooltip>
                     </md-button>
-
+                    <div class="md-toolbar-section-end">
+                      <md-button class="md-icon-button md-dense md-raised" @click="menuVisible = !menuVisible">
+                        <md-icon>keyboard_arrow_left</md-icon>
+                      </md-button>
+                    </div>
                   </slot>
               </div>
               <div layout="row" v-if="running">
