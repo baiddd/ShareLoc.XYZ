@@ -147,7 +147,7 @@ export default {
         return
       }
       const authid = this.$route.query.authid || this.store.authid
-      const secret = autobahn.auth_cra.derive_key(this.passwd, "shareLoc.xyz"+authid, 100, 16);
+      const secret = autobahn.auth_cra.derive_key(this.passwd, "ANNA-PALM"+authid, 100, 16);
       this.processing = true;
       const user_info = {'authid':authid, 'token':this.$route.query.token, 'secret': secret}
       if(this.mode == 'set'){

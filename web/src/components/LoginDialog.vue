@@ -251,7 +251,7 @@ export default {
         });
 
         if(authid && passwd){
-          secret = autobahn.auth_cra.derive_key(passwd, "shareLoc.xyz"+authid, 100, 16);
+          secret = autobahn.auth_cra.derive_key(passwd, "ANNA-PALM"+authid, 100, 16);
         }
         connection.onopen = (session, details) => {
           // if(details.authmethod != 'wampcra' && details.authmethod != 'cookie' && details.authmethod != 'anonymous' ){
