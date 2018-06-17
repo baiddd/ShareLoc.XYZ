@@ -5,10 +5,6 @@
       </md-app-toolbar>
       <md-app-content>
         <router-view/>
-        <br>
-        <br>
-        <md-divider></md-divider>
-        <main-footer/>
       </md-app-content>
    </md-app>
 </template>

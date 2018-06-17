@@ -22,6 +22,10 @@
     </md-card>
     <faq>
     </faq>
+    <br>
+    <br>
+    <md-divider></md-divider>
+    <main-footer/>
   </div>
 </template>
 

@@ -7,6 +7,7 @@ import Options from '@/components/Options'
 import Files from '@/components/Files'
 import Repository from '@/components/Repository'
 import Viewer from '@/components/Viewer'
+import ViewerV2 from '@/components/ViewerV2'
 import Password from '@/components/Password'
 import About from '@/components/About'
 import TOS from '@/components/TOS'
@@ -59,6 +60,11 @@ export default new Router({
       path: '/viewer',
       name: 'Viewer',
       component: Viewer
+    },
+    {
+      path: '/viewer2',
+      name: 'ViewerV2',
+      component: ViewerV2
     },
     {
       path: '/view',

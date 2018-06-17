@@ -44,7 +44,7 @@
               <span class="md-title">#{{sample.hash | truncate(12)}}</span>
               <md-button :href="url_prefix + sample.public_uuid" target="_blank">Open</md-button>
               <md-button class="md-primary md-icon-button" @click="selected_sample=sample; showInfoDialog=true"><md-icon>more_horiz</md-icon></md-button>
-  
+
             </md-card-actions>
           </md-card-area>
 
@@ -110,7 +110,10 @@
     <br>
     <br>
     <br>
-
+    <br>
+    <br>
+    <md-divider></md-divider>
+    <main-footer/>
   </div>
 </template>
 

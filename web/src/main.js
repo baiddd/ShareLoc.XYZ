@@ -17,6 +17,8 @@ import About from '@/components/About'
 import Repository from '@/components/Repository'
 import TOS from '@/components/TOS'
 import FAQ from '@/components/FAQ'
+import Whiteboard from '@/components/Whiteboard'
+import Joy from '@/components/Joy'
 import store from './store.js'
 import App from './App'
 import vueSlider from 'vue-slider-component'
@@ -37,6 +39,8 @@ Vue.component('main-footer', Footer)
 Vue.component('about', About)
 Vue.component('tos', TOS)
 Vue.component('faq', FAQ)
+Vue.component('whiteboard', Whiteboard)
+Vue.component('joy', Joy)
 Vue.component('repository', Repository)
 
 const truncate = function(text, length, clamp){

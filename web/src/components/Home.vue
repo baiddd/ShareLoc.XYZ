@@ -39,6 +39,10 @@
       <md-button class="md-primary" @click="showDialog=false">OK</md-button>
     </md-dialog-actions>
   </md-dialog>
+  <br>
+  <br>
+  <md-divider></md-divider>
+  <main-footer/>
 </div>
 </template>
 
