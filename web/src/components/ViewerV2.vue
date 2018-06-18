@@ -1,7 +1,5 @@
 <template>
 <div class="viewer">
-  <iframe id="remotepage" frameBorder="0" src="http://localhost:8001/#/viewer?navbar=0"></iframe>
-
   <div class="md-title">{{title}}</div>
   <!-- <md-card >
         <md-card-content > -->
