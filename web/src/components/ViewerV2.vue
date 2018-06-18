@@ -1,5 +1,7 @@
 <template>
 <div class="viewer">
+  <iframe id="remotepage" frameBorder="0" src="http://localhost:8001/#/viewer?navbar=0"></iframe>
+
   <div class="md-title">{{title}}</div>
   <!-- <md-card >
         <md-card-content > -->
@@ -10,16 +12,14 @@
           <md-icon>menu</md-icon>
         </md-button>
       </div>
-
     </md-app-toolbar>
     <md-app-drawer :md-active.sync="menuVisible" md-persistent="full">
       <md-button class="md-fab md-primary" @click="showImportDialog=true">
         <md-icon>add</md-icon>
       </md-button>
-
       <md-card>
         <md-card-header>
-          <div class="md-toolbar-row" flex>
+          <!-- <div class="md-toolbar-row" flex>
             <div class="md-toolbar-section-start">
               <md-button class="md-icon-button md-primary" @click="">
                 <md-icon>refresh</md-icon>
@@ -30,7 +30,7 @@
                 <md-icon>play_arrow</md-icon>
               </md-button>
             </div>
-          </div>
+          </div> -->
         </md-card-header>
         <md-card-content>
           <joy init="{id:'analysis_workflow', type:'actions'}"></joy>
@@ -178,12 +178,12 @@ export default {
       //
       //   this.plugin.api.register().then((res)=>{
       //     console.log('register return : ', res)
-      //     res.onact(my).then((res)=>{console.log('result on act: ', res, my)})
+      //     res.onexecute(my).then((res)=>{console.log('result on act: ', res, my)})
       //
       // }).catch((e)=>{console.error('--->',e)})
 
 
-      // this.plugin.api.gui_config.onact({sfs:1158}).then((joy)=>{console.log('return from',joy)})
+      // this.plugin.api.gui_config.onexecute({sfs:1158}).then((joy)=>{console.log('return from',joy)})
     },
     loadPlugin(path) {
       // exported methods, will be available to the plugin
@@ -200,20 +200,20 @@ export default {
 
         plugin.api.register().then((plugin_config) => {
           console.log('register plugin: ', plugin_config)
-          const onact = async (my) => {
+          const onexecute = async (my) => {
             return await plugin.api.run({
-              actor: {name: my.actor.name, type: my.actor.type},
-              data: my.data,
-              target: my.target,
+              op: {name: my.op.name, type: my.op.type},
+              config: my.data,
+              data: my.target,
               progress: this.updateProgress
             })
           }
 
-          for(var i=0;i<plugin_config.actors.length;i++){
-            const actor_config = plugin_config.actors[i]
-            // res.onact()
-            actor_config.onact = onact
-            Joy.add(actor_config);
+          for(var i=0;i<plugin_config.ops.length;i++){
+            const op_config = plugin_config.ops[i]
+            // res.onexecute()
+            op_config.onexecute = onexecute
+            Joy.add(op_config);
           }
           // this.setupJoy();
         }).catch((e) => {
@@ -261,4 +261,10 @@ export default {
 .app-content {
   overflow-y: hidden;
 }
+
+iframe {
+    width: 100%;
+    height: 100vh;
+}
+
 </style>

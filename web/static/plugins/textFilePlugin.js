@@ -1,47 +1,33 @@
 class TextFilePlugin {
   constructor() {
-    this.config = {
-      append_header: null,
-      delimiter: ',',
-      header_row: 0,
-    }
   }
 
   register(){
     return {
       module: "text_file_loader",
-      actors: [{
-        name: "add header line",
-        type: "text_loader/add_header_line",
-        tags: ["localization", "action", "file_loader"],
-        init: "add {id:'append_header', type:'string', placeholder:''} to the first line"
-      },{
-        name: "set delimiter",
+      ops: [{
+        name: "load text file",
         type: "text_loader/set_delimiter",
         tags: ["localization", "action", "file_loader"],
-        init: "set delimiter to {id:'delimiter', type:'string', placeholder:','} and {id:'header_row', type:'choose', options:['read headers from the first line','use index as the header'], placeholder:'read headers from the first line'}"
-      },{
-        name: "load text file",
-        type: "text_loader/load",
-        tags: ["localization", "action", "file_loader"],
-        init: "Load table from text file"
+        init: "Load a table from the file (use the following configurations)<hr>"+
+        "add \"{id:'append_header', type:'string', placeholder:''}\" to the first line (optional); " +
+        "{id:'header_row', type:'choose', options:['read headers from the first line','use index as the header'], placeholder:'read headers from the first line'} and " +
+        "use {id:'delimiter', type:'string', placeholder:','} to seperate columns."
+
       }]
     }
   }
 
   async run(my){
-    if(my.actor.name == 'load text file'){
-      const table = await this._loadFile(my.target.file, my.target.format)
-      my.target.table = table
-      return my
+    const format = {
+      header_row: my.config.header_row.startsWith('read headers')? 0 : -1,
+      delimiter: my.config.delimiter,
+      append_header: my.config.append_header,
+      header_transform: {}
     }
-    else if(my.actor.name == 'set delimiter'){
-      this.config.delimiter = my.data.delimiter
-      this.config.header_row = my.data.header_row.startsWith('read headers')? 0 : -1
-    }
-    else if(my.actor.name == 'add header line'){
-      this.append_header = my.data.append_header
-    }
+    const table = await this._loadFile(my.data.file, format)
+    my.data.table = table
+    return my
   }
 
   _parseFile(file, reading_callback, finish_callback) {
@@ -85,12 +71,10 @@ class TextFilePlugin {
   _loadFile(file, format) {
     return new Promise((resolve, reject) => {
       try {
-        console.assert(format.type == 'table')
-        console.assert(format.mode == 'text')
         console.assert(format.delimiter)
       } catch (e) {
         console.error(e)
-        self.postMessage({error: 'format error'});
+        reject('format error')
         return
       }
 

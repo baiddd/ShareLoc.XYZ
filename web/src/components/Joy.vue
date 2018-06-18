@@ -2,6 +2,12 @@
   <div class="joy">
     <div class="joy-container">
       <div class="joy-editor" ref="editor"></div>
+      <md-button class="md-button md-primary" :disabled="isRunning" @click="runJoy()">
+        <md-icon>play_arrow</md-icon>Run
+      </md-button>
+      <md-button class="md-button md-primary" :disabled="!isRunning" @click="stopJoy()">
+        <md-icon>stop</md-icon>Stop
+      </md-button>
     </div>
   </div>
 </template>
@@ -13,8 +19,13 @@ export default {
     init:{
       type: String,
       default: ()=>{
-
         return "joy workflow."
+      }
+    },
+    controlButtons:{
+      type: Boolean,
+      default: ()=>{
+        return true
       }
     },
     data: {
@@ -32,6 +43,7 @@ export default {
   },
   data () {
     return {
+      isRunning: false,
       router: this.$root.$data.router,
       store: this.$root.$data.store,
       api: this.$root.$data.store.api
@@ -49,12 +61,12 @@ export default {
   methods: {
     setupJoy() {
       this.$refs.editor.innerHTML = ''
-      
+
       Joy({
         // Where the Joy editor goes:
         container: this.$refs.editor,
 
-        // The words & actors inside the editor:
+        // The words & ops inside the editor:
         init: this.init, //"{id:'localizationWorkflow', type:'actions'} " + // a list of actions
           //"<hr> {type:'save'}", // a save button!
 
@@ -85,6 +97,9 @@ export default {
       //   })
       // }
     },
+    stopJoy() {
+
+    }
   }
 }
 </script>
