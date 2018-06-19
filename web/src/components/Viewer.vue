@@ -865,15 +865,15 @@ export default {
         this.tags = sample.tags.slice()
         this.thumbnail = sample.thumbnail
         if(sample.files[sample.hash]){
-          // this.loadS3File(sample.files[sample.hash], sample.hash).then(()=>{
-          //   this.loading_shared_url = false
-          // }).catch((e)=>{
-          //   console.error(e)
-          //   this.api.show("Error occured during loading.", 5000)
-          //   this.loading_shared_url = false
-          //   this.error_content = "Failed to load the sample, maybe it was removed."
-          //   this.showErrorDialog = true
-          // })
+          this.loadS3File(sample.files[sample.hash], sample.hash).then(()=>{
+            this.loading_shared_url = false
+          }).catch((e)=>{
+            console.error(e)
+            this.api.show("Error occured during loading.", 5000)
+            this.loading_shared_url = false
+            this.error_content = "Failed to load the sample, maybe it was removed."
+            this.showErrorDialog = true
+          })
         }
         else{
           this.showFilesDialog = true
