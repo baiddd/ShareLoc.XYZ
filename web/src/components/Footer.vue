@@ -123,6 +123,6 @@ export default {
 }
 
 .holds-the-iframe {
- background: url(/static/img/shareLoc.xyz-icon-circle-animation.svg) center center no-repeat;
+ background: url(/static/img/anna-palm-icon-circle-animation.svg) center center no-repeat;
 }
 </style>

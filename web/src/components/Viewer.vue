@@ -3,7 +3,7 @@
     <div class="md-title">{{title}}</div>
       <!-- <md-card >
         <md-card-content > -->
-          <md-app v-show="options" class="viewer-content">
+          <md-app v-show="options">
             <md-app-toolbar class="md-transparent md-dense" md-elevation="0" v-if="!menuVisible || (options && options.tableDict && show_filter)||(selected_filter!== null && selected_filter_max!== null && selected_filter_min!== null)">
               <div class="md-toolbar-row"  flex>
                 <md-button class="md-fab md-primary" @click="menuVisible=true" v-if="!menuVisible && options">
@@ -13,7 +13,7 @@
                     <md-switch v-show="rendered && options && options.tableDict && options.tableDict.z" v-model="use_3d" :disabled="!options || !options.tableDict || (!options.tableDict.z && !use_3d)" @change="switch3DView(use_3d)" name="use LUT">3D View</md-switch>&nbsp;&nbsp;
                 </div>
 
-                <div class="md-toolbar-section-start" v-if="filter_enabled && rendered && selected_filter!== null && selected_filter_max!== null && selected_filter_min!== null">
+                <div class="md-toolbar-section-start slider-toolbar" v-if="filter_enabled && rendered && selected_filter!== null && selected_filter_max!== null && selected_filter_min!== null">
                   <div class="md-layout-item"  flex>
                     <span class="md-xsmall-hide" >Set range for</span> <md-chip>{{selected_filter}}</md-chip> {{(filter_ranges[selected_filter][1]-filter_ranges[selected_filter][0]).toFixed(1)}}, {{filter_ranges[selected_filter]}}
                     <div>
@@ -208,20 +208,24 @@
               </md-list>
             </md-app-drawer>
 
-            <md-app-content class="viewer-content">
-                <div class="md-layout" v-if="(rendered||rendering) && options && options.tableDict">
-                  <span class="render-info">{{rendering_status}} {{rendering_progress>0?rendering_progress+'%':''}} </span><span class="render-info" v-show="use_3d"> &nbsp;&nbsp;fps:{{fps}}, ppf:{{ppf}} </span>
-                </div>
+            <md-app-content>
+
                <!-- <span v-show="options.tableDict && !localizationNumber" class="md-warn md-subheader"> No localization available to show. </span> -->
 
                <md-progress-bar  v-if="(rendered||rendering) && options && options.tableDict" :md-value="rendering_progress"></md-progress-bar>
-               <div v-show="rendered && !use_3d" id="leaflet_histogram" ></div>
-               <!-- <canvas v-show="rendered" v-if="!use_3d" id="histogram_canvas" v-bind:width="histogram_width" v-bind:height="histogram_height"></canvas> -->
-               <!-- <canvas v-show="false" v-if="!use_3d" id="histogram_canvas_buffer" v-bind:width="histogram_width" v-bind:height="histogram_height"></canvas> -->
 
-               <div v-show="use_3d" id="gui-webgl"> </div>
-               <canvas v-show="use_3d" id="histogram_canvas_3d"></canvas>
+               <div class="canvas-container" v-if="options">
+                 <div class="md-layout render-info" v-if="(rendered||rendering) && options && options.tableDict">
+                   <span>{{rendering_status}} {{rendering_progress>0?rendering_progress+'%':''}} </span><span class="render-info" v-show="use_3d"> &nbsp;&nbsp;fps:{{fps}}, ppf:{{ppf}} </span>
+                 </div>
 
+                 <div v-show="rendered && !use_3d" id="leaflet_histogram" ></div>
+                 <!-- <canvas v-show="rendered" v-if="!use_3d" id="histogram_canvas" v-bind:width="histogram_width" v-bind:height="histogram_height"></canvas> -->
+                 <!-- <canvas v-show="false" v-if="!use_3d" id="histogram_canvas_buffer" v-bind:width="histogram_width" v-bind:height="histogram_height"></canvas> -->
+
+                 <div v-show="use_3d" id="gui-webgl"> </div>
+                 <canvas v-show="use_3d" id="histogram_canvas_3d"></canvas>
+                </div>
                <!-- <md-empty-state
                 v-show="options && !rendered"
                 md-icon="devices_other"
@@ -234,7 +238,7 @@
 
                <md-empty-state flex
                 v-if="!options&&!shared_url_mode"
-                md-icon="static/img/anna-palm-icon-circle-animation.svg"
+                md-icon="hourglass_empty"
                 md-label="Open a localization table"
                 md-description="Render your table in the browser, process and share it with our server.">
                  <div v-if="running">
@@ -249,7 +253,7 @@
                    No data? checkout the repository for public data.
                  </md-button>
                  <br>
-                 <md-card>
+                 <md-card class="faq-card">
                    <md-card-content>
                      <h2>FAQ</h2>
                      <h3>what are the supported file formats?</h3>
@@ -265,7 +269,7 @@
                </md-empty-state>
                <md-empty-state flex
                 v-if="!options&&shared_url_mode"
-                md-icon="static/img/shareLoc.xyz-icon-circle-animation.svg"
+                md-icon="hourglass_empty"
                 md-label="Loading sample..."
                 md-description="Please wait, this may take a while...">
                  <div v-if="running">
@@ -696,9 +700,9 @@ export default {
       anet_output_available: false,
       anet_output_img: null,
       anet_output_sample_hash: null,
-      current_render2d_config: {brightness: 0},
-      hist_render2d_config: {brightness: 0},
-      anet_render2d_config: {brightness: 0},
+      current_render2d_config: {brightness: 1},
+      hist_render2d_config: {brightness: 1},
+      anet_render2d_config: {brightness: 1},
       supported_file_formats: {},
       file_sample_lines: '',
       use_widefield: false,
@@ -726,20 +730,16 @@ export default {
           this.$refs['filter-slider'].refresh()
         if(this.$refs['brightness-slider'])
           this.$refs['brightness-slider'].refresh()
+        this.leafletMap.invalidateSize();
         this.$forceUpdate()
-        // if(this.leafletMap){
-        //   // calculate the edges of the image, in coordinate space
-        //   var southWest = this.leafletMap.unproject([0, h], map.getMaxZoom()-1);
-        //   var northEast = this.leafletMap.unproject([w, 0], map.getMaxZoom()-1);
-        //   var bounds = new L.LatLngBounds(southWest, northEast);
-        //   // tell leaflet that the map is exactly as big as the image
-        //   this.leafletMap.setMaxBounds(bounds);
-        // }
+        // const evt = window.document.createEvent('UIEvents');
+        // evt.initUIEvent('resize', true, false, window, 0);
+        // window.dispatchEvent(new Event('resize'))
+
       }, 800)
     }
   },
   mounted(){
-
     this.screenWidth = window.innerWidth
     this.store.event_bus.$on('resize', (newsize)=>{
       this.screenWidth = newsize.width
@@ -2209,6 +2209,10 @@ export default {
        this._canvas_layer.addTo(map);
        // tell leaflet that the map is exactly as big as the image
        map.setMaxBounds(bounds);
+       setTimeout(() => {
+         this.leafletMap.invalidateSize();
+         this.$forceUpdate()
+       }, 800)
 
      }
      if(!imageData){
@@ -2369,30 +2373,46 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.md-app-scroller{
+  z-index: -1;
+}
 #histogram_map { height: 400px;}
-
 #leaflet_histogram {
+  z-index: 12;
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 80vh;
+}
+.canvas-container{
+  z-index: 10;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.slider-toolbar{
+  z-index: 30;
 }
 .render-info {
+  z-index: 20;
+  text-align: right;
+  color: #3ae249;
+  position: absolute;
+  top: 8px;
+  right: 45px;
   margin-top: 8px;
 }
 #histogram_canvas_3d {
+  z-index: 13;
 	position: relative;
 	top: 0;
 	left: 0;
 }
 #gui-webgl {
+  z-index: 14;
   position: fixed;
-  z-index: 9999;
+
 }
-.viewer-content{
-  min-height:70vh;
-}
+
 .md-list-item-content{
   display: inline-flex;
 }
@@ -2462,23 +2482,25 @@ export default {
 }
 
 .md-empty-state {
-  width: 60%;
-  max-width: 80%;
+  position: absolute;
+  top: 39%;
+  max-width: 100%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  height: 100%;
+  width: 100%;
 }
 
-@media screen and (max-width: 800px) {
-  .md-empty-state {
-    width: 90%;
-    max-width: 100%;
-  }
+.viewer {
+  height: 100%;
 }
 
-.md-content{
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
 
 #faq-button{
   text-transform: none;
+}
+
+.faq-card{
+  width: 80%;
 }
 </style>

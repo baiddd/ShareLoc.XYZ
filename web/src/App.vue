@@ -78,7 +78,7 @@ export default {
 html, body
 {
     height: 100%;
-    overflow-y: scroll; /* has to be scroll, not auto */
+    overflow-y: auto; /* has to be scroll, not auto */
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     -webkit-transform: translate3d(0,0,0);
@@ -86,14 +86,23 @@ html, body
 
 @media screen and (max-width: 800px) {
   .md-content {
-    overflow-y: scroll;
-    overflow-x: hidden;
+    /* overflow-y: scroll;
+    overflow-x: hidden; */
     padding: 4px;
   }
 }
+
 .md-app {
-  max-height: 100vh;
-  border: 1px solid rgba(#000, .12);
+  height:100%;
+}
+
+.md-app-content{
+  height: 100%;
+}
+.md-app-container{
+  width: 100%;
+  height: 100%;
+  overflow-x:hidden;
 }
 
 .md-menu-content{
@@ -114,8 +123,8 @@ html, body
   font-size: 16px !important;
 }
 
-.md-dialog{
+/* .md-dialog{
   overflow-y: auto !important;
-}
+} */
 
 </style>
