@@ -84,10 +84,14 @@ html, body
     -webkit-transform: translate3d(0,0,0);
 }
 
+.md-content {
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
+  padding: 8px;
+}
+
 @media screen and (max-width: 800px) {
   .md-content {
-    /* overflow-y: scroll;
-    overflow-x: hidden; */
     padding: 4px;
   }
 }
@@ -127,4 +131,7 @@ html, body
   overflow-y: auto !important;
 } */
 
+.md-app.md-fixed .md-app-scroller{
+  z-index: 0 !important;
+}
 </style>

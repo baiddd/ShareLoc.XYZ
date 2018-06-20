@@ -2395,7 +2395,7 @@ export default {
 .render-info {
   z-index: 20;
   text-align: right;
-  color: #3ae249;
+  color: #de199e;
   position: absolute;
   top: 8px;
   right: 45px;
@@ -2505,4 +2505,5 @@ export default {
 .faq-card{
   width: 80%;
 }
+
 </style>

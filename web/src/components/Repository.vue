@@ -107,11 +107,8 @@
     @md-confirm="showSConfirm=false; remove_sample(selected_sample._id)" />
     <br>
     <br>
-    <br>
-    <br>
-    <br>
-    <md-divider></md-divider>
-    <main-footer/>
+    <md-divider v-if="title"></md-divider>
+    <main-footer v-if="title"/>
   </div>
 </template>
 
@@ -306,5 +303,4 @@ img.thumbnail-img:hover {
   flex-wrap: nowrap;
   overflow: hidden;
 }
-
 </style>
