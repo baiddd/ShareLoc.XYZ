@@ -291,7 +291,7 @@
       :md-content="error_content"
       md-confirm-text="OK" />
 
-      <md-dialog :md-active.sync="showImportDialog">
+      <md-dialog :md-active.sync="showImportDialog" :md-click-outside-to-close="false">
         <md-dialog-content>
           <div class="md-layout-row md-gutter">
           <div class="md-flex">
@@ -1787,7 +1787,11 @@ export default {
 
       this.smlm.save(this.updateStatus).then((file)=>{
          this.running = false
-         saveAs(file, file.name);
+         let filename = file.name
+         if(!file.name.endsWith('.smlm') && !file.name.endsWith('.zip')){
+           filename = file.name + '.smlm'
+         }
+         saveAs(file, filename);
       }).catch((e)=>{
         this.api.show(e)
       })
@@ -2487,9 +2491,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%); */
   max-width: 100%;
-
-
-  height: 100%;
   width: 100%;
 }
 
