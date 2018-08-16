@@ -36,7 +36,7 @@
       </md-tab>
     </md-tabs>
     <p v-show="status">{{status}}</p>
-    <p>  <md-button @click="api.contact" id="help-button"> Can't sign up/login?</md-button></p>
+    <p>  <md-button @click="api&&api.contact&&api.contact()" id="help-button"> Can't sign up/login?</md-button></p>
   </md-dialog-content>
   <md-dialog-actions>
     <md-button class="md-primary" :disabled="processing" @click="login_signup()">OK</md-button>
