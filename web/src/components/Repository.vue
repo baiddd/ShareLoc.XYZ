@@ -49,12 +49,10 @@
           </md-card-area>
 
       </md-card>
-      <div v-if="loading_public_samples" class="md-layout md-alignment-center-center">
-
-          <br>
-          <md-progress-spinner :md-diameter="100" :md-stroke="10" md-mode="indeterminate"></md-progress-spinner>
-
+      <br>
       </div>
+      <div v-if="loading_public_samples" class="md-layout md-alignment-center-center">
+          <md-progress-spinner :md-diameter="100" :md-stroke="10" md-mode="indeterminate"></md-progress-spinner>
       </div>
       <br>
       <md-toolbar class="md-transparent md-dense md-layout-item" md-elevation="0">
@@ -109,11 +107,8 @@
     @md-confirm="showSConfirm=false; remove_sample(selected_sample._id)" />
     <br>
     <br>
-    <br>
-    <br>
-    <br>
-    <md-divider></md-divider>
-    <main-footer/>
+    <md-divider v-if="title"></md-divider>
+    <main-footer v-if="title"/>
   </div>
 </template>
 
@@ -308,5 +303,4 @@ img.thumbnail-img:hover {
   flex-wrap: nowrap;
   overflow: hidden;
 }
-
 </style>

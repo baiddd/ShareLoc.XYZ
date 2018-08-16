@@ -220,7 +220,7 @@ export function load3DViewer(canvasElement, update_callback) {
     scopeParams['x'] = 1;
     scopeParams['y'] = 1;
     scopeParams['z'] = 1;
-    scopeParams['point size'] = 1;
+    scopeParams['point size'] = 3;
     rerender = true;
   };
 
@@ -229,7 +229,7 @@ export function load3DViewer(canvasElement, update_callback) {
   scaleFolder.add(scopeParams, 'x', 0, 10).listen().onChange(setRerender);
   scaleFolder.add(scopeParams, 'y', 0, 10).listen().onChange(setRerender);
   scaleFolder.add(scopeParams, 'z', 0, 10).listen().onChange(setRerender);
-  scaleFolder.add(scopeParams, 'point size', 0, 10).listen().onChange(setRerender);
+  scaleFolder.add(scopeParams, 'point size', 0, 20).listen().onChange(setRerender);
   scaleFolder.add(scopeParams, 'reset scale');
 
   scopeParams['reset clipping'] = function(){
@@ -687,7 +687,7 @@ function render3DLocalizations(locations) {
         var alphaN = 'alpha ' + N;
         scopeParams[activN] = true;
         scopeParams[colorN] = colors[colorIndex];
-        scopeParams[alphaN] = 0.3;
+        scopeParams[alphaN] = 0.9;
         colorFolder.add(scopeParams, activN).onChange(setRerender);
         colorFolder.addColor(scopeParams, colorN).onChange(setRerender);
         colorFolder.add(scopeParams, alphaN, 0, 1).onChange(setRerender);

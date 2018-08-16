@@ -17,7 +17,7 @@
        </a></p>
         <br>
         <p>About the <a href="#/viewer" target="_blank">SMLM Viewer</a>: the 3D rendering part of is built based on <a href="https://twitter.com/Flexi23" target="_blank">Felix Woitzel</a>'s <a href="https://github.com/Flexi23/pointcloud-loader/" target="_blank">pointcloud-loader</a>, which is licensed under Apache License V2.0. We also thank <a href="https://twitter.com/christlet" target="_blank">Christophe Leterrier</a> who actively promotes the tool.</p>
-        <md-button @click="api.contact" class="md-raised">Contact us</md-button>
+        <!-- <md-button @click="api.contact" class="md-raised">Contact us</md-button> -->
       </md-card-content>
     </md-card>
     <faq>
