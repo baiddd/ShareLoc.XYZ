@@ -120,7 +120,7 @@ export default {
       }
       this.api.connect(["anonymous"]).then((session, connection)=>{
         this.processing = true;
-        this.store.session.call("org.imod.public.forget_password", [{'authid':this.email}], {}, {disclose_me: true}).then(()=>{
+        this.store.session.call("org.imod.public.forget_password", [{'authid':this.email, 'webapp': 'shareloc.xyz'}], {}, {disclose_me: true}).then(()=>{
           this.processing = false;
           this.status = "We will soon send an email for you to reset your password, please check your email."
           this.api.show("Please check your email.")

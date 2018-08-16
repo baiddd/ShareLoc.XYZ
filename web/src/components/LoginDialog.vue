@@ -123,7 +123,7 @@ export default {
            this.api.show("Connection timeout, please try again.")
            console.error("Connection timeout, please try again.")
         },5000);
-        session.call("org.imod.public.signup", [{'authid':this.authid, 'secret':secret}], {}, {disclose_me: true}).then(()=>{
+        session.call("org.imod.public.signup", [{'authid':this.authid, 'secret':secret, 'webapp': 'shareloc.xyz'}], {}, {disclose_me: true}).then(()=>{
           clearTimeout(timer);
           this.processing = false
           // this.authid= ''
