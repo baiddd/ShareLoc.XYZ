@@ -2,9 +2,9 @@
 A platform for sharing localization data.
 
 ## Key Features
- * Private sharing with secured url
  * Public localization data repository
- * Visualizing localization tables in your web browser
+ * Private sharing with secured url
+ * Visualizing localization data in your web browser
  * Import `CSV` files, and export as `SMLM` format
 
 ## The SMLM file format
