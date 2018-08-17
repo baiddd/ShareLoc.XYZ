@@ -36,7 +36,7 @@
       </md-tab>
     </md-tabs>
     <p v-show="status">{{status}}</p>
-    <p>  <md-button @click="api.contact" id="help-button"> Can't sign up/login?</md-button></p>
+    <p>  <md-button @click="api&&api.contact&&api.contact()" id="help-button"> Can't sign up/login?</md-button></p>
   </md-dialog-content>
   <md-dialog-actions>
     <md-button class="md-primary" :disabled="processing" @click="login_signup()">OK</md-button>
@@ -123,7 +123,7 @@ export default {
            this.api.show("Connection timeout, please try again.")
            console.error("Connection timeout, please try again.")
         },5000);
-        session.call("org.imod.public.signup", [{'authid':this.authid, 'secret':secret}], {}, {disclose_me: true}).then(()=>{
+        session.call("org.imod.public.signup", [{'authid':this.authid, 'secret':secret, 'webapp': 'shareloc.xyz'}], {}, {disclose_me: true}).then(()=>{
           clearTimeout(timer);
           this.processing = false
           // this.authid= ''

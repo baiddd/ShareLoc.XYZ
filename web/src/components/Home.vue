@@ -9,7 +9,9 @@
         <div class="banner-container">
           <img src="static/img/perspective-hr.jpg" alt="banner"></img>
           <div class="subtitle">A platform for sharing localization microscopy data.<br>
-              <md-button class="md-raised md-accent"  @click="showDialog=true">Getting Started</md-button>
+            <md-button class="md-raised" href="https://github.com/imodpasteur/smlm-file-format/blob/master/README.md" target="_blank">SMLM file format</md-button>
+            <!-- <md-button class="md-raised md-accent" to="/repository">The repository</md-button> -->
+            <md-button class="md-raised md-accent"  to="/viewer">SMLM viewer</md-button>
          </div>
 
         </div>

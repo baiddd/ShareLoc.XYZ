@@ -34,24 +34,6 @@
       <md-button class="md-primary" @click="showDialog=false">OK</md-button>
     </md-dialog-actions>
     </md-dialog>
-    <md-dialog :md-active.sync="showQuestion" id="question-dialog">
-      <md-toolbar class="md-primary">
-        <div class="md-toolbar-row" flex>
-          <md-subheader>
-            Contact us
-          </md-subheader>
-          <div class="md-toolbar-section-end" >
-            <md-button class="md-icon-button" @click="showQuestion=false"> <md-icon>close</md-icon></md-button>
-          </div>
-        </div>
-      </md-toolbar>
-      <md-dialog-content>
-        <div class="holds-the-iframe"><iframe id="typeform-full" width="100%" height="100%" frameborder="0" src="https://oeway.typeform.com/to/qyJOIy"></iframe></div>
-      </md-dialog-content>
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="showQuestion=false">Close</md-button>
-      </md-dialog-actions>
-    </md-dialog>
   </div>
 </template>
 
@@ -62,19 +44,16 @@ export default {
     return {
       mode: 'about',
       showDialog: false,
-      showQuestion: false,
       router: this.$root.$data.router,
       store: this.$root.$data.store,
       api: this.$root.$data.store.api
     }
   },
   mounted(){
-    this.api.contact = this.contact
+
   },
   methods: {
-    contact(){
-      this.showQuestion = true
-    }
+
   }
 }
 </script>
@@ -98,28 +77,6 @@ export default {
 #ip-img{
   height: 40px;
   margin-bottom: 30px;
-}
-
-#question-dialog{
-  max-height: 1000px !important;
-  max-width: 1200px !important;
-  width: 80% !important;
-  height: 60% !important;
-}
-
-@media screen and (max-width: 800px) {
-  #question-dialog{
-    max-height: 100% !important;
-    max-width: 100% !important;
-    width: 100% !important;
-    height: 100% !important;
-  }
-}
-
-#typeform-full{
-  height:100%;
-  width: 100%;
-  position:absolute; left: 0; right: 0; bottom: 0; top: 0px;
 }
 
 .holds-the-iframe {
