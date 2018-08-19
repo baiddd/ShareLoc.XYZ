@@ -222,15 +222,17 @@ self.onmessage = function(e) {
       table_data.avg = {}
       table_data.tableDict = {}
       table_data.tableUint8Dict = {}
+      var transferables = []
       for(let i=0;i<transformedHeaders.length;i++){
         table_data.min[transformedHeaders[i]] = min[i]
         table_data.max[transformedHeaders[i]] = max[i]
         table_data.avg[transformedHeaders[i]] = avg[i]
         table_data.tableDict[transformedHeaders[i]] = float32Arrays[i]
+        transferables.push(float32Arrays[i].buffer)
         table_data.tableUint8Dict[transformedHeaders[i]] = tableUint8Arrays[i]
       }
       table_data.loaded = true
-      self.postMessage(table_data);
+      self.postMessage(table_data, transferables);
     }
 
     console.log('loading....')

@@ -2023,6 +2023,16 @@ export default {
             // console.log('rendering ', e.data.progress)
             this.rendering_progress = Math.round(e.data.progress)
           }
+          if(e.data._options){
+            if(e.data._options.tableDict && options.tableDict){
+              for(let k in e.data._options.tableDict){
+                options.tableDict[k] = e.data._options.tableDict[k]
+              }
+            }
+            if(e.data._options.isFiltered){
+              options.isFiltered = e.data._options.isFiltered
+            }
+          }
           if(e.data.finished){
             console.log('finished filtering')
             options_.isFiltered = e.data.isFiltered
@@ -2042,7 +2052,11 @@ export default {
           }
         }
         this.rendering_status = "filtering..."
-        filterWorker.postMessage({options:options_})
+        const transferables = []
+        for(let k in options_.tableDict){
+          transferables.push(options_.tableDict[k].buffer)
+        }
+        filterWorker.postMessage({options:options_}, transferables)
       })
     },
     render2d(options_){
@@ -2088,6 +2102,16 @@ export default {
           // if(e.data.sending){
           //   this.rendering_status = "preparing histogram"
           // }
+          if(e.data._options){
+            if(e.data._options.tableDict && options_.tableDict){
+              for(let k in e.data._options.tableDict){
+                options_.tableDict[k] = e.data._options.tableDict[k]
+              }
+            }
+            if(e.data._options.isFiltered){
+              options_.isFiltered = e.data._options.isFiltered
+            }
+          }
           if(e.data.finished){
             console.log('finished rendering')
 
@@ -2133,7 +2157,14 @@ export default {
         }
         this.rendering_status = "rendering..."
         console.log('rendering in canvas')
-        renderWorker.postMessage({canvas_img_data:canvas_img_data, options:options_})
+        const transferables = []
+        for(let k in options_.tableDict){
+          transferables.push(options_.tableDict[k].buffer)
+        }
+        if(options_.isFiltered){
+          transferables.push(options_.isFiltered.buffer)
+        }
+        renderWorker.postMessage({canvas_img_data:canvas_img_data, options:options_}, transferables)
       })
     },
     render3d(options){

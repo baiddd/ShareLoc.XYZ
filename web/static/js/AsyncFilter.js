@@ -31,7 +31,10 @@ self.onmessage = function(e) {
       var pixel_size = options.pixel_size
       var filter_expression = options.filter_expression.trim()
       var filter = null;
-
+      var transferables = []
+      for(let k in options.tableDict){
+        transferables.push(options.tableDict[k].buffer)
+      }
       if(filter_expression && filter_expression!=''){
         try {
            filter = compileExpression(filter_expression);
@@ -53,12 +56,12 @@ self.onmessage = function(e) {
            }
         } catch (e) {
           console.error(e)
-           self.postMessage({error: e.toString(), message: 'Illegal fillter expression'});
+           self.postMessage({error: e.toString(), message: 'Illegal fillter expression', _options: options}, transferables);
            return
         }
       }
       else{
-        self.postMessage({finished: true, isFiltered: null, filteredRows:options.tableDict.x.length, frameNumber: options.max.f-options.min.f+1});
+        self.postMessage({finished: true, isFiltered: null, filteredRows:options.tableDict.x.length, frameNumber: options.max.f-options.min.f+1, _options: options}, transferables);
         return
       }
       var isFiltered= new Uint8Array(new ArrayBuffer(options.rows));
@@ -95,10 +98,11 @@ self.onmessage = function(e) {
       //     filtered_table_dict[k][i] = table_dict[k][filtered_indexes[i]]
       //   }
       // }
-      self.postMessage({finished: true, isFiltered: isFiltered, filteredRows:filteredRows, frameNumber: frameNumber-options.min.f+1});
+      transferables.push(isFiltered.buffer)
+      self.postMessage({finished: true, isFiltered: isFiltered, filteredRows:filteredRows, frameNumber: frameNumber-options.min.f+1, _options: options}, transferables);
     } catch (e) {
       console.error(e)
-      self.postMessage({error: e, message: 'something went wrong during rendering.'});
+      self.postMessage({error: e, message: 'something went wrong during rendering.', _options: options}, transferables);
     }
 }
 
