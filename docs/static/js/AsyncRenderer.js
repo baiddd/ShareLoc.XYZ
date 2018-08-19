@@ -30,6 +30,13 @@ self.onmessage = function(e) {
       var table_dict = options.tableDict
       var pixel_size = options.pixel_size
       var isFiltered = options.isFiltered
+      var transferables = []
+      for(let k in options.tableDict){
+        transferables.push(options.tableDict[k].buffer)
+      }
+      if(isFiltered){
+        transferables.push(isFiltered.buffer)
+      }
       var min_max_offset = (options.offset_mode == "zero-max")
       if(min_max_offset){
         xy_range[2] = 0;
@@ -77,9 +84,10 @@ self.onmessage = function(e) {
             canvas_data[s+3] = 255
           }
       }
-      self.postMessage({finished: true, canvas_img_data: data.canvas_img_data});
+
+      self.postMessage({finished: true, canvas_img_data: data.canvas_img_data, _options: options}, transferables);
     } catch (e) {
       console.error(e)
-      self.postMessage({error: e, message: 'something went wrong during rendering.'});
+      self.postMessage({error: e, message: 'something went wrong during rendering.', _options:options}, transferables);
     }
 }
