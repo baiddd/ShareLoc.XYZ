@@ -79,10 +79,9 @@
            <br>
            <md-divider></md-divider>
 
-           <span class="md-list-item-text">Files</span>
-
+           <span class="md-list-item-text">Files (click to download)</span>
            <md-list v-if="selected_sample.files">
-               <md-list-item @click="downloadFile(selected_sample, f)" v-for="(f, h) in selected_sample.files" :key="h">
+               <md-list-item class="md-primary" @click="downloadFile(selected_sample, f)" v-for="(f, h) in selected_sample.files" :key="h">
                  <md-chip v-for="tag in f.tags" :key="tag">{{tag}}</md-chip>{{f.name}}</span>
                </md-list-item>
            </md-list>
@@ -169,8 +168,12 @@ export default {
       this.store.session.call('org.imod.public.get_shared_sample_file', [sample_query, f.hash], {}, {disclose_me: true}).then((ret)=>{
         console.log('file url', ret.url)
         const element = document.createElement('a');
+        let filename = sample.name
+        if(!filename.endsWith('.smlm') && !filename.endsWith('.zip')){
+          filename = filename + '.smlm'
+        }
         element.setAttribute('href', ret.url);
-        element.setAttribute('download', f.name);
+        element.setAttribute('download', filename);
 
         element.style.display = 'none';
         document.body.appendChild(element);

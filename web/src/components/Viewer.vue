@@ -298,7 +298,7 @@
             <md-field v-if="selected_file">
               <label for="file-format">File Format</label>
               <md-select v-model="text_file_format" name="file-format" id="file-format">
-                <md-option v-if="selected_file_name.endsWith(format.extension)" :value="key" v-for="(format, key) in supported_file_formats" :key="key">{{key}}</md-option>
+                <md-option v-if="selected_file_name.endsWith(format.extension) || selected_file_name.indexOf('.')==-1" :value="key" v-for="(format, key) in supported_file_formats" :key="key">{{key}}</md-option>
               </md-select>
             </md-field>
 
@@ -579,7 +579,7 @@
 import { Filters, hot_lut } from '../utils.js'
 import axios from 'axios';
 import { saveAs } from 'file-saver';
-import { smlmFile, supported_text_formats, supported_image_formats, manifest_template } from '../smlmFile';
+import { smlmFile, native_formats, supported_text_formats, supported_image_formats, manifest_template } from '../smlmFile';
 import { load3DViewer, show3DLocalizations } from '../pointCloud3D.js'
 const pica = require('pica')();
 // const yx = L.latLng
@@ -753,9 +753,9 @@ export default {
     })
 
     this.supported_file_formats = {}
+    Object.assign(this.supported_file_formats, {'SMLM format': {}})
     Object.assign(this.supported_file_formats, supported_text_formats)
     Object.assign(this.supported_file_formats, supported_image_formats)
-
     if(this.$route.path == 'viewer'){
       return
     }
@@ -1486,7 +1486,10 @@ export default {
       })
     },
     loadFile(){
-      if(this.selected_file_name.endsWith('.png')){
+      if(this.text_file_format == 'SMLM format'){
+        this.loadSmlm()
+      }
+      else if(this.selected_file_name.endsWith('.png')){
         this.loadImageFile('png')
       }
       else if(this.selected_file_name.endsWith('.jpg')){
@@ -1621,6 +1624,8 @@ export default {
         this.running = false
         console.log(e)
         this.api.show(e, 5000)
+        this.running_status = e
+        // this.running = false
       })
     },
     getSharedURL(sample_hash, return_link){
@@ -1708,6 +1713,9 @@ export default {
             this.renderWorker.terminate()
             this.renderWorker = null
           }
+          if(!this.smlm.manifest.name.endsWith('.smlm')){
+            this.smlm.manifest.name = this.smlm.manifest.name + '.smlm'
+          }
           const file_props = {name: this.smlm.manifest.name,
                               type: 'application/smlm',
                               sample_hash: this.smlm.manifest.hash,
@@ -1779,22 +1787,27 @@ export default {
       })
     },
     downloadSmlmFile(){
-      // close render worker for memory
-      if(this.renderWorker){
-        this.renderWorker.terminate()
-        this.renderWorker = null
-      }
+      // if(this.selected_file_name.endsWith('.smlm')){
+      //   saveAs(this.selected_file, this.selected_file_name);
+      // }
+      // else{
+        // close render worker for memory
+        if(this.renderWorker){
+          this.renderWorker.terminate()
+          this.renderWorker = null
+        }
+        this.smlm.save(this.updateStatus).then((file)=>{
+           this.running = false
+           let filename = file.name
+           if(!file.name.endsWith('.smlm') && !file.name.endsWith('.zip')){
+             filename = file.name + '.smlm'
+           }
+           saveAs(file, filename);
+        }).catch((e)=>{
+          this.api.show(e)
+        })
+      // }
 
-      this.smlm.save(this.updateStatus).then((file)=>{
-         this.running = false
-         let filename = file.name
-         if(!file.name.endsWith('.smlm') && !file.name.endsWith('.zip')){
-           filename = file.name + '.smlm'
-         }
-         saveAs(file, filename);
-      }).catch((e)=>{
-        this.api.show(e)
-      })
     },
     getUploadUrl(file_props, overwrite){
       return new Promise((resolve, reject) => {

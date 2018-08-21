@@ -143,6 +143,7 @@ export class smlmFile {
                 this.files = this.manifest.files
                 this.files.push(file_info)
               }
+              console.log('-----------------', this.files)
               if(!this.manifest.name || this.manifest.name == ""){
                 this.manifest.name = file.name.split(".")[0] + ".smlm"
               }
@@ -375,6 +376,8 @@ export class smlmFile {
             // only files with a table can count as smlm
             this.isSMLM = true
             resolve(this.files)
+          }).catch((e)=>{
+            reject(e)
           })
 
         }).catch((e)=>{
@@ -623,7 +626,7 @@ export const native_formats = {
     "headers": [],
     "dtype": [],
     "shape": [],
-    "units": {},
+    "units": [],
     // Optional
     "name": "smlm-table(binary)",
     "description": "the default smlm format for localization tables"
@@ -661,7 +664,7 @@ export const native_formats = {
 
 export const manifest_template = {
   // Required
-  "format_version": "0.2",
+  "format_version": "1",
 
   "formats": {},
 

@@ -90,9 +90,10 @@ self.onmessage = function(e) {
     // table_data.file = e.data.file;
     var isFirstBlock = true;
 
-    var float32Arrays = [];
+
     var reading_callback = function (result) {
         var arrayBuffers = [];
+        var float32Arrays = [];
         if(leftover_str){
           result = leftover_str + result;
         }
@@ -177,6 +178,7 @@ self.onmessage = function(e) {
                 float32Arrays[header][line-skipped] = v;
             }
         }
+        if(skipped) console.log('skipped ' + skipped + ' lines.')
         for(var header = 0; header < headers.length; header++){
             arrayBuffers[header] = arrayBuffers[header].slice(0, arrayBuffers[header].byteLength-skipped*4)
             float32Arrays[header] = float32Arrays[header].slice(0, float32Arrays[header].length-skipped)
@@ -191,14 +193,16 @@ self.onmessage = function(e) {
         self.postMessage({error: 'loading error'});
         return
       }
-
       isFirstBlock = true
       var float32Arrays = [];
       var tableUint8Arrays = []
+      var dd = new Float32Array(arrayBuffersList[0][1]);
       for(var header = 0; header < headers.length; header++){
         var arrayUint8 = new Uint8Array(rows*4);
+        var offset = 0;
         for(var i=0;i<arrayBuffersList.length;i++){
-           arrayUint8.set(new Uint8Array(arrayBuffersList[i][header]), i==0?0:i*arrayBuffersList[i-1][header].length);
+           arrayUint8.set(new Uint8Array(arrayBuffersList[i][header]), offset);
+           offset += arrayBuffersList[i][header].byteLength
         }
         tableUint8Arrays[header] = new Uint8Array(arrayUint8.buffer);
         float32Arrays[header] = new Float32Array(arrayUint8.buffer);
@@ -234,7 +238,5 @@ self.onmessage = function(e) {
       table_data.loaded = true
       self.postMessage(table_data, transferables);
     }
-
-    console.log('loading....')
     parseFile(e.data.file, reading_callback, finish_callback)
 }

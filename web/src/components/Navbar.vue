@@ -5,7 +5,7 @@
             <div class="site-title">shareLoc.xyz<span class="superscript">alpha</span></div>
           </md-button>
 
-          <span v-show="$route.path!='/'" class="md-layout-item md-medium-hide subheader-title">Localization Data Sharing Made Simple.</span>
+          <span v-show="$route.path!='/'" class="md-layout-item md-medium-hide subheader-title">Localization Data Sharing Made Easy</span>
 
           <div class="md-toolbar-section-end">
             <md-menu md-size="medium" v-if="screenWidth<600">
