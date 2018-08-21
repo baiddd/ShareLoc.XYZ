@@ -8,5 +8,6 @@ A platform for sharing localization data.
  * Import `CSV` files, and export as `SMLM` format
 
 ## The SMLM file format
-ShareLoc platform relies on the [SMLM file format](https://github.com/imodpasteur/smlm-file-format), which makes the sharing more affordable.
+
+ShareLoc platform relies on the [SMLM file format](https://github.com/imodpasteur/smlm-file-format), which makes the visualization and sharing more affordable.
 
