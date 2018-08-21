@@ -484,9 +484,10 @@ export class smlmFile {
             const buffer = new ArrayBuffer(rows*columns*4)
             const uint8Arr = new Uint8Array(buffer)
             console.log('binary file size: ' + rows*columns*4)
+
             // for(let c=0;c<columns;c++){
-            //   for(let r=0;r<rows;r++){
-            //     uint8Arr[r*columns+c] = tableUint8Arrays[c][r]
+            //   for(let r=0;r<rows*4;r++){
+            //     uint8Arr[4*rows*c+r] = tableUint8Arrays[c][r]
             //   }
             // }
             for(let c=0;c<columns;c++){
