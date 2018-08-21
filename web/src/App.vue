@@ -87,7 +87,7 @@ html, body
 .md-content {
   /* overflow-y: scroll;
   overflow-x: hidden; */
-  padding: 8px;
+  padding: 1px;
 }
 
 @media screen and (max-width: 800px) {

@@ -4,7 +4,14 @@
     <md-card-header> -->
 
       <!-- <md-icon class="md-size-5x md-small-hide" md-src="static/img/shareLoc.xyz-icon-circle.svg" /> -->
-
+      <md-toolbar v-if="showAlert">
+            <div class="md-toolbar-row"  flex>
+              <p class="alert">Notice: we recently fixed a bug occured when importing large csv file to ShareLoc, the fixed version produces 1.3GB smlm file with 7.2GB csv file (<a target="_blank" href="https://github.com/imodpasteur/smlm-file-format">more details</a>).</p>
+              <div class="md-toolbar-section-end" >
+                <md-button class="md-icon-button" @click="showAlert=false"> <md-icon>close</md-icon></md-button>
+              </div>
+            </div>
+      </md-toolbar>
       <div class="md-toolbar-row md-layout md-alignment-center-center">
         <div class="banner-container">
           <img src="static/img/perspective-hr.jpg" alt="banner"></img>
@@ -54,6 +61,7 @@ export default {
   name: 'home',
   data () {
     return {
+      showAlert: false,
       showDialog: false,
       router: this.$root.$data.router,
       store: this.$root.$data.store,
@@ -61,8 +69,13 @@ export default {
     }
   },
   mounted(){
-    this.$nextTick(()=>{
-    })
+    const disable_date = new Date(Date.UTC(2018, 8, 3, 12, 0, 0))
+    const now = new Date(Date.now())
+    if(now<disable_date){
+      setTimeout(()=>{
+         this.showAlert = true
+      },500);
+    }
   },
   methods: {
     shareOnTwitter(){
