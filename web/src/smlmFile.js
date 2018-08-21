@@ -143,7 +143,6 @@ export class smlmFile {
                 this.files = this.manifest.files
                 this.files.push(file_info)
               }
-              console.log('-----------------', this.files)
               if(!this.manifest.name || this.manifest.name == ""){
                 this.manifest.name = file.name.split(".")[0] + ".smlm"
               }
@@ -457,7 +456,13 @@ export class smlmFile {
             const format = JSON.parse(JSON.stringify(native_formats['smlm-table(binary)']))
             const format_key = format.name+ '-' + file_no
             const data = this.files[file_no].data
-            const tableUint8Arrays = data.tableUint8Arrays
+            const tableDict = data.tableDict
+
+            const tableUint8Arrays = []
+
+            for(let i=0;i<data.headers.length;i++){
+               tableUint8Arrays.push(new Uint8Array(tableDict[data.headers[i]].buffer))
+            }
             const rows = tableUint8Arrays[0].length/4
             const columns = tableUint8Arrays.length
 
@@ -664,7 +669,7 @@ export const native_formats = {
 
 export const manifest_template = {
   // Required
-  "format_version": "1",
+  "format_version": "0.2",
 
   "formats": {},
 
