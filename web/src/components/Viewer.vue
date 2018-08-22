@@ -1498,7 +1498,6 @@ export default {
       })
     },
     loadFile(){
-      this.options = this.options || {}
       if(this.text_file_format == 'SMLM format'){
         this.loadSmlm()
       }
@@ -1520,6 +1519,7 @@ export default {
       console.time('load image file');
       const smlm = this.smlm || new smlmFile()
       const info = {offset:{x:this.offset_x, y:this.offset_y}, tags: this.tags, channel:this.channel_name, pixel_size: this.pixel_size}
+      this.options = this.options || {}
       smlm.import_image(this.selected_file, selected_format, info, this.append_mode, this.updateStatus).then((file_info)=>{
         this.file_tags = file_info.tags
         this.running = false
