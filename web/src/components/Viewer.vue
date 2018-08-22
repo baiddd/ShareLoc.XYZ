@@ -226,6 +226,7 @@
                  <div v-show="use_3d" id="gui-webgl"> </div>
                  <canvas v-show="use_3d" id="histogram_canvas_3d"></canvas>
                 </div>
+
                <!-- <md-empty-state
                 v-show="options && !rendered"
                 md-icon="devices_other"
@@ -289,7 +290,7 @@
       <md-dialog-alert
       :md-active.sync="showErrorDialog"
       :md-content="error_content"
-      md-confirm-text="OK" />
+      md-confirm-text="OK" :md-click-outside-to-close="false"/>
 
       <md-dialog :md-active.sync="showImportDialog" :md-click-outside-to-close="false">
         <md-dialog-content>
@@ -844,7 +845,9 @@ export default {
           if(this.smlm) this.smlm.manifest.license = this.smlm.manifest.license || 'CC BY 4.0'
         }).catch((e)=>{
           console.error(e)
-          this.api.show("something went wrong.")
+          this.api.show("something went wrong.", 5000)
+          this.error_content = "Failed to share this sample, something went wrong."
+          this.showErrorDialog = true
         })
       }
       else
@@ -864,8 +867,9 @@ export default {
         this.loaded_sample = sample
         this.tags = sample.tags.slice()
         this.thumbnail = sample.thumbnail
-        if(sample.files[sample.hash]){
-          this.loadS3File(sample.files[sample.hash], sample.hash).then(()=>{
+        const file_hash = sample.hash || Object.keys(sample.files)[0]
+        if(sample.files[file_hash]){
+          this.loadS3File(sample.files[file_hash], file_hash).then(()=>{
             this.loading_shared_url = false
           }).catch((e)=>{
             console.error(e)
@@ -873,18 +877,26 @@ export default {
             this.loading_shared_url = false
             this.error_content = "Failed to load the sample, maybe it was removed."
             this.showErrorDialog = true
+            this.running_status = "Error: Failed to load the sample, maybe it was removed."
           })
         }
         else{
-          this.showFilesDialog = true
+          this.api.show("Error: no file found in the sample.", 5000)
           this.loading_shared_url = false
+          this.error_content = "There is no file in the sample."
+          this.showErrorDialog = true
+          this.running_status = "Error: There is no file in the sample."
+          // this.showFilesDialog = true
+          // this.loading_shared_url = false
         }
+
       }).catch((reason)=>{
         console.error(reason)
         this.error_content = "Sample was not found."
         this.showErrorDialog = true
         this.api.show(reason.args[0], 5000)
         this.loading_shared_url = false
+        this.running_status = "Error: Sample was not found."
       })
     },
     loadS3File(f, h){
@@ -1486,6 +1498,7 @@ export default {
       })
     },
     loadFile(){
+      this.options = this.options || {}
       if(this.text_file_format == 'SMLM format'){
         this.loadSmlm()
       }
@@ -2196,6 +2209,7 @@ export default {
       })
     },
     render_canvas(imageData, brightness){
+      this.rendered = true
       let map;
       brightness = brightness || 1;
       if(this.leafletMap){

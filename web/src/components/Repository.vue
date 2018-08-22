@@ -23,9 +23,7 @@
        md-icon="info_outline"
        md-label="No sample available on this page."
        md-description="">
-
      </md-empty-state>
-
       <md-card class="sample-card" v-for="sample in public_sample_list" :key="sample._id.$oid">
           <md-card-media  md-ratio="16:9">
             <a target="_blank" :href="url_prefix + sample.public_uuid">
@@ -39,12 +37,13 @@
                  {{ chip }}
                </template>
              </md-chips>
+             <p>{{sample.name.slice(0,30)+(sample.name&&sample.name.length>30? '...': '')}}</p>
+             <!-- <p v-if="sample.owner">Uploaded by {{sample.owner}}</p> -->
             </md-card-header>
             <md-card-actions>
               <span class="md-title">#{{sample.hash | truncate(12)}}</span>
               <md-button :href="url_prefix + sample.public_uuid" target="_blank">Open</md-button>
               <md-button class="md-primary md-icon-button" @click="selected_sample=sample; showInfoDialog=true"><md-icon>more_horiz</md-icon></md-button>
-
             </md-card-actions>
           </md-card-area>
 
