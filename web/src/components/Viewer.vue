@@ -327,6 +327,10 @@
                 <label for="channel_name">Channel Name</label>
                 <md-input type="text" v-model="channel_name" name="channel_name"></md-input>
               </md-field> -->
+              <!-- <md-field>
+                <label for="delimiter"> Delimiter </label>
+                <md-input type="text" v-model="delimiter" name="delimiter"></md-input>
+              </md-field> -->
               <md-field>
                 <label for="offset_mode"> Offset Mode</label>
                 <md-select v-model="offset_mode" name="offset-mode">
@@ -677,6 +681,7 @@ export default {
       pixel_size: 20,
       offset_x: 0,
       offset_y: 0,
+      // delimiter: ',',
       offset_mode: 'min-max',
       running_progress: 0,
       selected_channel: 0,
@@ -1067,10 +1072,13 @@ export default {
           r.onload = (evt)=>{
             this.file_sample_lines = evt.target.result.split('\n').slice(0,2)
             if(this.file_sample_lines[0].includes('x [nm]') && this.file_sample_lines[0].includes('\t')){
-              this.text_file_format = 'ThunderSTORM(xls)'
+              this.text_file_format = 'ThunderSTORM (xls)'
             }
             else if(this.file_sample_lines[0].includes('x [nm]') && this.file_sample_lines[0].includes(',')){
-              this.text_file_format = 'ThunderSTORM(csv)'
+              this.text_file_format = 'ThunderSTORM (csv)'
+            }
+            else if(this.file_sample_lines[0].includes('Position X [nm]') && this.file_sample_lines[0].includes(';')){
+              this.text_file_format = 'ZEISS (csv)'
             }
             else if(this.selected_file_name.endsWith('.png')){
               this.text_file_format = 'png'

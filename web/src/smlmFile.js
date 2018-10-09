@@ -586,7 +586,7 @@ export const supported_image_formats = {"png":{
 
 }
 
-export const supported_text_formats = {"ThunderSTORM(csv)": {
+export const supported_text_formats = {"ThunderSTORM (csv)": {
     // Required
     "type": "table",
     "extension": ".csv",
@@ -600,13 +600,13 @@ export const supported_text_formats = {"ThunderSTORM(csv)": {
     "header_transform": {"x [nm]":"x", "y [nm]":"y", "z [nm]":"z", "uncertainty_xy [nm]":"uncertainty_xy", "uncertainty_z [nm]":"uncertainty_z"},
 
     // Optional
-    "name": "ThunderSTORM(csv)",
+    "name": "ThunderSTORM (csv)",
     "description": "a csv format used in thunderSTORM"
   },
-  "ThunderSTORM(xls)": {
+  "ThunderSTORM (xls)": {
       // Required
       "type": "table",
-      "extension": ".csv",
+      "extension": ".xls",
       "mode": "text",
       "dtype": "float32",
       "delimiter": "\t",
@@ -617,8 +617,26 @@ export const supported_text_formats = {"ThunderSTORM(csv)": {
       "header_transform": {"x [nm]":"x", "y [nm]":"y", "z [nm]":"z", "uncertainty_xy [nm]":"uncertainty_xy", "uncertainty_z [nm]":"uncertainty_z"},
 
       // Optional
+      "name": "ThunderSTORM (xls)",
       "description": "a xls format used in thunderSTORM"
-    }
+    },
+    "ZEISS (csv)": {
+        // Required
+        "type": "table",
+        "extension": ".csv",
+        "mode": "text",
+        "dtype": "float32",
+        "delimiter": ";",
+        "comments": "",
+        // specify which row is the header, set to -1 if there is no header
+        "header_row": 0,
+        // specify how to transform the headers to the standard header defined in smlm format,
+        "header_transform": {"Position X [nm]":"x", "Position Y [nm]":"y", "Position Z [nm]":"z", "First Frame":"frame"},
+
+        // Optional
+        "name": "ZEISS (csv)",
+        "description": "a csv format used in thunderSTORM"
+      },
 }
 
 export const native_formats = {
