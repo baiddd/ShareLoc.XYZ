@@ -620,7 +620,7 @@ export const supported_text_formats = {"ThunderSTORM (csv)": {
       "name": "ThunderSTORM (xls)",
       "description": "a xls format used in thunderSTORM"
     },
-    "ZEISS (csv)": {
+    "ZEISSv1 (csv)": {
         // Required
         "type": "table",
         "extension": ".csv",
@@ -634,9 +634,26 @@ export const supported_text_formats = {"ThunderSTORM (csv)": {
         "header_transform": {"Position X [nm]":"x", "Position Y [nm]":"y", "Position Z [nm]":"z", "First Frame":"frame"},
 
         // Optional
-        "name": "ZEISS (csv)",
+        "name": "ZEISSv1 (csv)",
         "description": "a csv format used in thunderSTORM"
       },
+      "ZEISSv2 (csv)": {
+          // Required
+          "type": "table",
+          "extension": ".csv",
+          "mode": "text",
+          "dtype": "float32",
+          "delimiter": ";",
+          "comments": "",
+          // specify which row is the header, set to -1 if there is no header
+          "header_row": 0,
+          // specify how to transform the headers to the standard header defined in smlm format,
+          "header_transform": {"x [nm]":"x", "y [nm]":"y", "z [nm]":"z", "First Frame":"frame"},
+
+          // Optional
+          "name": "ZEISSv2 (csv)",
+          "description": "a csv format used in thunderSTORM"
+        }
 }
 
 export const native_formats = {
