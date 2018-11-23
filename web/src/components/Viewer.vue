@@ -1933,10 +1933,10 @@ export default {
       this.filter_expression = ""
       for(var i=0;i<this.options.headers.length;i++){
         if(this.filter_ranges[this.options.headers[i]][0]!=this.options.min[this.options.headers[i]]){
-          this.filter_expression += this.options.headers[i] + ">" + this.filter_ranges[this.options.headers[i]][0] + ' and '
+          this.filter_expression += this.options.headers[i] + ">=" + this.filter_ranges[this.options.headers[i]][0] + ' and '
         }
         if(this.filter_ranges[this.options.headers[i]][1]!=this.options.max[this.options.headers[i]]){
-          this.filter_expression += this.options.headers[i] + "<" + this.filter_ranges[this.options.headers[i]][1] + ' and '
+          this.filter_expression += this.options.headers[i] + "<=" + this.filter_ranges[this.options.headers[i]][1] + ' and '
         }
       }
       if(this.filter_expression.slice(-5) == ' and '){
