@@ -127,7 +127,7 @@
                 <md-divider></md-divider>
                 <p >click a name to set the value range:</p>
                 <div v-if="options && options.headers">
-                  <md-chip  v-for="(header, index) in options.headers" :key="header" v-show="options&&options.headers" :class="(selected_filter == header)? 'md-primary': '' " md-clickable @click="show_filter=false; switch_selected_filter(header)">{{header}}
+                  <md-chip  v-for="(header, index) in options.headers" :key="index" v-show="options&&options.headers" :class="(selected_filter == header)? 'md-primary': '' " md-clickable @click="show_filter=false; switch_selected_filter(header)">{{header}}
                     <md-tooltip>click to set the range of '{{header}}'</md-tooltip>
                   </md-chip>
                 </div>
@@ -1082,6 +1082,9 @@ export default {
             }
             else if(this.file_sample_lines[0].includes('x [nm]') && this.file_sample_lines[0].includes(';')){
               this.text_file_format = 'ZEISSv2 (csv)'
+            }
+            else if(this.file_sample_lines[0].startsWith('#') && this.file_sample_lines[0].includes('identifier=')){
+              this.text_file_format = 'RapidSTORM (txt)'
             }
             else if(this.selected_file_name.endsWith('.png')){
               this.text_file_format = 'png'

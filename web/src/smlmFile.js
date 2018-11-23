@@ -635,25 +635,43 @@ export const supported_text_formats = {"ThunderSTORM (csv)": {
 
         // Optional
         "name": "ZEISSv1 (csv)",
-        "description": "a csv format used in thunderSTORM"
+        "description": "a csv format used in ZEISS microscope"
       },
       "ZEISSv2 (csv)": {
-          // Required
-          "type": "table",
-          "extension": ".csv",
-          "mode": "text",
-          "dtype": "float32",
-          "delimiter": ";",
-          "comments": "",
-          // specify which row is the header, set to -1 if there is no header
-          "header_row": 0,
-          // specify how to transform the headers to the standard header defined in smlm format,
-          "header_transform": {"x [nm]":"x", "y [nm]":"y", "z [nm]":"z", "First Frame":"frame"},
+        // Required
+        "type": "table",
+        "extension": ".csv",
+        "mode": "text",
+        "dtype": "float32",
+        "delimiter": ";",
+        "comments": "",
+        // specify which row is the header, set to -1 if there is no header
+        "header_row": 0,
+        // specify how to transform the headers to the standard header defined in smlm format,
+        "header_transform": {"x [nm]":"x", "y [nm]":"y", "z [nm]":"z", "First Frame":"frame"},
 
-          // Optional
-          "name": "ZEISSv2 (csv)",
-          "description": "a csv format used in thunderSTORM"
-        }
+        // Optional
+        "name": "ZEISSv2 (csv)",
+        "description": "a csv format used for ZEISS microscope"
+      },
+      "RapidSTORM (txt)": {
+        // Required
+        "type": "table",
+        "extension": ".txt",
+        "mode": "text",
+        "dtype": "float32",
+        "delimiter": " ",
+        "comments": "",
+        // specify which row is the header, set to -1 if there is no header
+        "header_row": 0,
+
+        // specify how to transform the headers to the standard header defined in smlm format,
+        "header_transform": {"*all*": 'identifier="([\\w\\d\\-_]+)"', "Position-0-0":"x", "Position-1-0":"y", "Position-2-0":"z", "ImageNumber-0-0":"frame"},
+
+        // Optional
+        "name": "RapidSTORM (txt)",
+        "description": "a text format used in rapidSTORM"
+      }
 }
 
 export const native_formats = {
