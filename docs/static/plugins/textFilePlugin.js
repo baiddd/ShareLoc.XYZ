@@ -109,6 +109,16 @@ class TextFilePlugin {
           var lines = result.split('\n');
           if(isFirstBlock){
             if(format.header_row>=0){
+              if(format.header_transform['*all*']){
+                var regex = new RegExp(format.header_transform['*all*'], "g")// /identifier="([\w\d\-_]+)"/g;
+                var match = regex.exec(lines[0]);
+                var ids = []
+                while (match != null) {
+                  ids.push(match[1])
+                  match = regex.exec(lines[0]);
+                }
+                lines[0] = ids.join(delimiter)
+              }
               headers = lines[0].split(delimiter)
               table_data.header_line = lines[0];
               lines.shift();
