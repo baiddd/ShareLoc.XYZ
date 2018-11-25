@@ -258,8 +258,8 @@
                    <md-card-content>
                      <h2>FAQ</h2>
                      <h3>what are the supported file formats?</h3>
-                     <p>Currently, you can load files with the following formats: .smlm, .csv(thunderSTORM), .xls(thunderSTORM), .png, .jpg.</p>
-                     <p> If you have other file format which is not supported yet, please <a href="https://github.com/imodpasteur/shareLoc.xyz/issues" target="_blank">send us an issue on github</a>. </p>
+                     <p>Currently, you can load files with the following formats: <a href="https://github.com/imodpasteur/smlm-file-format" target="_blank">SMLM(.smlm)</a>, ThunderSTORM(.csv/.xls), RapidSTROM, ZEISS(ELYRA), .png, .jpg.</p>
+                     <p> If you have other file format which is not supported yet, please <a href="https://www.dropbox.com/request/IyZ7HkzHUpB0t5Mkp46l" target="_blank">upload a sample file</a>, and <a href="https://oeway.typeform.com/to/rdkPmd" target="_blank">send us a message</a> to describe your file format, we will try to support your file format. </p>
                      <h3>where does my data go?</h3>
                      <p>Don't worry, your data will stay in your browser, and will not go to our server unless you choose to process it with our server or use the sharing features.
                      If you process your data with our server, by default, no one else could access it, and we won't use it for other purposes without your permission.</p>
