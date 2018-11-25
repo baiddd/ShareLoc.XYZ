@@ -1077,6 +1077,9 @@ export default {
             else if(this.file_sample_lines[0].includes('x [nm]') && this.file_sample_lines[0].includes(',')){
               this.text_file_format = 'ThunderSTORM (csv)'
             }
+            else if(this.file_sample_lines[0].includes('Position X [nm]') && this.file_sample_lines[0].includes('\t')){
+              this.text_file_format = 'ZEISS (txt)'
+            }
             else if(this.file_sample_lines[0].includes('Position X [nm]') && this.file_sample_lines[0].includes(';')){
               this.text_file_format = 'ZEISSv1 (csv)'
             }

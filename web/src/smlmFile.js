@@ -620,6 +620,23 @@ export const supported_text_formats = {"ThunderSTORM (csv)": {
       "name": "ThunderSTORM (xls)",
       "description": "a xls format used in thunderSTORM"
     },
+    "ZEISS (txt)": {
+      // Required
+      "type": "table",
+      "extension": ".txt",
+      "mode": "text",
+      "dtype": "float32",
+      "delimiter": "\t",
+      "comments": "",
+      // specify which row is the header, set to -1 if there is no header
+      "header_row": 0,
+      // specify how to transform the headers to the standard header defined in smlm format,
+      "header_transform": {"Position X [nm]":"x", "Position Y [nm]":"y", "Position Z [nm]":"z", "First Frame":"frame"},
+
+      // Optional
+      "name": "ZEISS (txt)",
+      "description": "a txt format used in ZEISS microscope"
+    },
     "ZEISSv1 (csv)": {
         // Required
         "type": "table",
