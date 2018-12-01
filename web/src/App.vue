@@ -127,9 +127,9 @@ html, body
   font-size: 16px !important;
 }
 
-/* .md-dialog{
-  overflow-y: auto !important;
-} */
+.md-dialog-container {
+  overflow: auto !important;
+}
 
 .md-app.md-fixed .md-app-scroller{
   z-index: 0 !important;
