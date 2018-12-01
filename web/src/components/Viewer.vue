@@ -292,6 +292,21 @@
       :md-content="error_content"
       md-confirm-text="OK" :md-click-outside-to-close="false"/>
 
+      <md-dialog :md-active.sync="showUploading" :md-click-outside-to-close="false">
+        <md-dialog-content>
+          <div layout="row">
+            <p>{{running_status}} {{running_status.length<30? ', please wait, this may take a while.': ''}} </p>
+            <md-progress-bar md-mode="indeterminate" v-show="!(running_progress && running_progress>0)"></md-progress-bar>
+            <md-progress-bar :md-value="running_progress" v-show="running_progress && running_progress>0"></md-progress-bar>
+            <br>
+          </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+          <md-button class="md-primary" @click="showUploading=false">Close</md-button>
+        </md-dialog-actions>
+      </md-dialog>
+
+
       <md-dialog :md-active.sync="showImportDialog" :md-click-outside-to-close="false">
         <md-dialog-content>
           <div class="md-layout-row md-gutter">
@@ -1708,7 +1723,10 @@ export default {
     },
     shareSample(showSharedLink, overwrite){
       return new Promise((resolve, reject) => {
+      this.showUploading = true
+      this.running_status = 'Preparing for sharing...'
       this.uploadSample(overwrite).then(()=>{
+        this.showUploading = false
         if(this.get_shared_link || showSharedLink){
           this.getSharedURL(this.smlm.manifest.hash, true).then((url)=>{
             console.log(url)
@@ -1730,6 +1748,7 @@ export default {
           })
         }
       }).catch((e)=>{
+        this.running_status = 'Something went wrong when sharing sample.'
         console.error(e)
         this.api.show('something went wrong when sharing sample.', 5000)
       })
