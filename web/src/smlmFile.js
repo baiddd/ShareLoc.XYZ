@@ -687,7 +687,7 @@ export const supported_text_formats = {"ThunderSTORM (csv)": {
 
         // Optional
         "name": "RapidSTORM (txt)",
-        "description": "a text format used in rapidSTORM"
+        "description": "a text format used in RapidSTORM"
       }
 }
 
