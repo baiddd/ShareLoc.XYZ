@@ -60,7 +60,7 @@ self.onmessage = function(e) {
               self.postMessage({progress:progress});
           }
           if(isFiltered && !isFiltered[line]) continue
-          var f = parseInt(ff[line])
+          var f = ff ? parseInt(ff[line]): line
           var x = parseInt(xx[line]/pixel_size)
           var y = parseInt(yy[line]/pixel_size)
           if(isNaN(f) || isNaN(x) || isNaN(y) ){
