@@ -740,6 +740,7 @@ export default {
       current_displaying: null,
       show140: false,
       support140: true,
+      showUploading: false,
       store: this.$root.$data.store,
       api: this.$root.$data.store.api,
     }
@@ -1103,6 +1104,9 @@ export default {
             }
             else if(this.file_sample_lines[0].startsWith('#') && this.file_sample_lines[0].includes('identifier=')){
               this.text_file_format = 'RapidSTORM (txt)'
+            }
+            else if(this.file_sample_lines[0].includes('x ') && this.file_sample_lines[0].includes('y ')){
+              this.text_file_format = 'Space Seperated List (txt)'
             }
             else if(this.selected_file_name.endsWith('.png')){
               this.text_file_format = 'png'
