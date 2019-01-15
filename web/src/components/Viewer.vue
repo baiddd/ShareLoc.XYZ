@@ -1369,11 +1369,11 @@ export default {
                               tags: sample_tags,
                               uid: this.store.uid,
                               thumbnail: this.smlm.manifest.thumbnail,
+                              license: this.smlm.manifest.license,
+                              citeAs: this.smlm.manifest.citeAs
                             },
                             hash: file_hash,
                             tags: file_tags,
-                            license: this.smlm.manifest.license,
-                            citeAs: this.smlm.manifest.citeAs,
                             metadata:{filter_expression: this.filter_expression}
                            }
 
@@ -1783,9 +1783,9 @@ export default {
                                 description: this.smlm.manifest.description,
                                 tags: this.smlm.manifest.tags,
                                 thumbnail: this.smlm.manifest.thumbnail,
+                                citeAs: this.smlm.manifest.citeAs,
+                                license: this.smlm.manifest.license,
                               },
-                              citeAs: this.smlm.manifest.citeAs,
-                              license: this.smlm.manifest.license,
                               hash: this.smlm.manifest.hash,
                               tags: ['#smlm'],
                               metadata:{}
