@@ -1687,6 +1687,9 @@ export default {
             if(ret.msg){
               this.api.show(ret.msg, 5000)
             }
+            if(this.make_public && !ret.public_uuid){
+              alert('This sample was uploaded by someone else before, you cannot make it public, but you can contact the administrator to override this.')
+            }
             if(!return_link){
                if(ret.public_uuid || (ret.hash && ret.shared_token)){
                  resolve(ret)
