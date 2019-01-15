@@ -324,15 +324,16 @@
             </md-field>
 
             <div class="md-flex">
-                <label>Tags</label>
-                <md-chips v-model="tags" :md-limit="20" md-placeholder="Type a tag and press enter...">
+                <label>Tags for this channel/file</label>
+                <md-chips v-model="tags" :md-limit="20" md-placeholder="Type a file tag and press enter...">
                    <template slot="md-chip" slot-scope="{ chip }">
                      {{ chip }}
                      <!-- <small v-if="chip === currentProject">(Marcos Moura)</small> -->
                    </template>
-                   <div class="md-helper-text">SR for SuperRes image, WF for widefield</div>
+                   <div class="md-helper-text">e.g. SR for SuperRes image, WF for widefield</div>
                  </md-chips>
             </div>
+            <md-switch v-model="append_mode" v-if="this.smlm" name="append">Append to the current file</md-switch>
             <md-switch v-model="show_more_import_options" name="more_options">more options</md-switch>
             <div v-show="show_more_import_options">
               <label>File content:</label>
@@ -685,7 +686,6 @@ export default {
       showFilesDialog: false,
       showErrorDialog: false,
       error_content: 'error occured.',
-      append_mode: false,
       text_file_format: '',
       running_status: '',
       running: false,
@@ -703,6 +703,7 @@ export default {
       tags: [],
       metadata: {},
       show_more_import_options: false,
+      append_mode: false,
       showImportDialog: false,
       get_shared_link: true,
       make_public: false,
@@ -1084,7 +1085,7 @@ export default {
         }
         else{
           var r = new FileReader();
-          var blob = this.selected_file .slice(0, 100);
+          var blob = this.selected_file.slice(0, 100);
           r.onload = (evt)=>{
             this.file_sample_lines = evt.target.result.split('\n').slice(0,2)
             if(this.file_sample_lines[0].includes('x [nm]') && this.file_sample_lines[0].includes('\t')){
@@ -1127,6 +1128,7 @@ export default {
             else{
               this.tags = ['#SR']
             }
+            this.append_mode = false
             this.showImportDialog = true
           };
           r.onerror = ()=> {
@@ -1553,7 +1555,7 @@ export default {
     },
     loadImageFile(selected_format){
       console.time('load image file');
-      const smlm = this.smlm || new smlmFile()
+      const smlm = this.append_mode && this.smlm ? this.smlm : new smlmFile();
       const info = {offset:{x:this.offset_x, y:this.offset_y}, tags: this.tags, channel:this.channel_name, pixel_size: this.pixel_size}
       this.options = this.options || {}
       smlm.import_image(this.selected_file, selected_format, info, this.append_mode, this.updateStatus).then((file_info)=>{
@@ -1611,7 +1613,7 @@ export default {
     },
     loadTextFile(selected_format){
       console.time('load text file', selected_format);
-      const smlm = new smlmFile();
+      const smlm = this.append_mode && this.smlm ? this.smlm : new smlmFile();
       // do not support append for now
       // this.append_mode = false;
       // this.hist_render2d_config.brightness = 100
