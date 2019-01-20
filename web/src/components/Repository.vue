@@ -69,7 +69,7 @@
             <p>Uploaded by: {{selected_sample.owner}}</p>
             <p>UserID: {{selected_sample.uid}}</p>
             <p v-if="selected_sample.citeAs">Cite as: {{selected_sample.citeAs}}</p>
-            <p v-if="selected_sample.license">Cite as: {{selected_sample.license}}</p>
+            <p v-if="selected_sample.license">License: {{selected_sample.license}}</p>
             <p>Tags:</p>
             <md-chips v-model="selected_sample.tags" md-static>
              <template slot="md-chip" slot-scope="{ chip }">
