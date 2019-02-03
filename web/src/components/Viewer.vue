@@ -1109,6 +1109,9 @@ export default {
             else if(this.file_sample_lines[0].includes('x ') && this.file_sample_lines[0].includes('y ')){
               this.text_file_format = 'Space Seperated List (txt)'
             }
+            else if(this.file_sample_lines[0].includes('X\t') && this.file_sample_lines[0].includes('\tY\t') && this.file_sample_lines[0].includes('Channel Name')){
+              this.text_file_format = 'Nikon NSTORM (csv)'
+            }
             else if(this.selected_file_name.endsWith('.png')){
               this.text_file_format = 'png'
             }
@@ -1963,6 +1966,12 @@ export default {
     update_selected_filter(){
       this.filter_expression = ""
       for(var i=0;i<this.options.headers.length;i++){
+        if(!isFinite(this.filter_ranges[this.options.headers[i]][0])){
+          continue
+        }
+        if(!isFinite(this.filter_ranges[this.options.headers[i]][1])){
+          continue
+        }
         if(this.filter_ranges[this.options.headers[i]][1] != this.filter_ranges[this.options.headers[i]][0]){
           if(this.filter_ranges[this.options.headers[i]][0]!=this.options.min[this.options.headers[i]]){
             this.filter_expression += this.options.headers[i] + ">=" + this.filter_ranges[this.options.headers[i]][0] + ' and '
