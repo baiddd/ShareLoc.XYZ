@@ -10,7 +10,7 @@
         <!-- <h2>Cite shareLoc.xyz</h2>
         <p> </p> -->
         <h2>Acknowledgements</h2>
-        <p>shareLoc.xyz project is mainly supported by
+        <p>ShareLoc.xyz project is mainly supported by
         </p>
         <p><a href="https://www.pasteur.fr" target="_blank">
        <img id="ip-img" src="static/img/Institut_Pasteur_logo.svg" alt="Institut Pasteur">
@@ -20,8 +20,6 @@
         <!-- <md-button @click="api.contact" class="md-raised">Contact us</md-button> -->
       </md-card-content>
     </md-card>
-    <faq>
-    </faq>
     <br>
     <br>
     <md-divider></md-divider>
