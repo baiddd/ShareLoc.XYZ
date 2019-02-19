@@ -707,10 +707,10 @@ export const supported_text_formats = {"ThunderSTORM (csv)": {
         "name": "Space Seperated List (txt)",
         "description": "A list of coordinates seperated with space."
       },
-      "Nikon NSTORM (csv)": {
+      "Nikon NSTORM (txt)": {
         // Required
         "type": "table",
-        "extension": ".csv",
+        "extension": ".txt",
         "mode": "text",
         "dtype": "float32",
         "delimiter": "\t",
@@ -721,8 +721,8 @@ export const supported_text_formats = {"ThunderSTORM (csv)": {
         "header_transform": {"X":"x", "Y":"y", "Z":"z", "Frame":"frame"},
 
         // Optional
-        "name": "Nikon NSTORM (csv)",
-        "description": "a txt format used in Nikon NSTORM microscope"
+        "name": "Nikon NSTORM (txt)",
+        "description": "a txt format exported from Nikon NSTORM software"
       },
 
 }

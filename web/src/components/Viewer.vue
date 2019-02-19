@@ -258,7 +258,7 @@
                    <md-card-content>
                      <h2>FAQ</h2>
                      <h3>What are the supported file formats?</h3>
-                     <p>Currently, you can load files with the following formats: <a href="https://github.com/imodpasteur/smlm-file-format" target="_blank">SMLM(.smlm)</a>, ThunderSTORM(.csv/.xls), RapidSTROM, ZEISS(ELYRA), Nikon NSTORM, .png, .jpg.</p>
+                     <p>Currently, you can load files with the following formats: <a href="https://github.com/imodpasteur/smlm-file-format" target="_blank">SMLM(.smlm)</a>, ThunderSTORM(.csv/.xls), RapidSTROM, ZEISS(ELYRA), Nikon NSTORM(txt), .png, .jpg.</p>
                      <p> If you have other file format which is not supported yet, please <a href="https://www.dropbox.com/request/IyZ7HkzHUpB0t5Mkp46l" target="_blank">upload a sample file</a>, and <a href="https://oeway.typeform.com/to/rdkPmd" target="_blank">send us a message</a> to describe your file format, we will try to support your file format. </p>
                      <h3>where does my data go?</h3>
                      <p>Don't worry, your data will stay in your browser, and will not go to our server unless you use the sharing feature of ShareLoc.xyz.
@@ -1110,7 +1110,7 @@ export default {
               this.text_file_format = 'Space Seperated List (txt)'
             }
             else if(this.file_sample_lines[0].includes('X\t') && this.file_sample_lines[0].includes('\tY\t') && this.file_sample_lines[0].includes('Channel Name')){
-              this.text_file_format = 'Nikon NSTORM (csv)'
+              this.text_file_format = 'Nikon NSTORM (txt)'
             }
             else if(this.selected_file_name.endsWith('.png')){
               this.text_file_format = 'png'
