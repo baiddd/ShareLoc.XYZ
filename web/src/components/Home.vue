@@ -14,26 +14,21 @@
       </md-toolbar>
       <div class="md-toolbar-row md-layout md-alignment-center-center">
         <div class="banner-container">
-          <img src="static/img/perspective-hr.jpg" alt="banner"></img>
+          <img src="/static/img/bg.jpg" alt="banner"></img>
           <div class="subtitle">A platform for sharing localization microscopy data.<br>
             <md-button class="md-raised" href="https://github.com/imodpasteur/smlm-file-format/blob/master/README.md" target="_blank">SMLM file format</md-button>
-            <!-- <md-button class="md-raised md-accent" to="/repository">The repository</md-button> -->
             <md-button class="md-raised md-accent"  to="/viewer">SMLM viewer</md-button>
          </div>
-
         </div>
-
       </div>
-      <md-toolbar class="md-transparent md-dense" md-elevation="0">
+      <!-- <md-toolbar class="md-transparent md-dense" md-elevation="0">
         <div class="md-toolbar-row" flex>
             <div class="md-toolbar-section-end" >
               <md-button  href="https://github.com/imodpasteur/shareLoc.xyz" target="_blank"><md-icon md-src="static/img/github.svg" class="md-size-1x svg-icon"></md-icon>source code</md-button>
               <md-button  @click="shareOnTwitter"><md-icon md-src="static/img/twitter.svg" class="md-size-1x svg-icon"></md-icon>share</md-button>
             </div>
         </div>
-      </md-toolbar>
-
-       <br>
+      </md-toolbar> -->
        <br>
        <repository :show-tags="false" :title="null"></repository>
   <md-dialog :md-active.sync="showDialog">
@@ -95,7 +90,7 @@ export default {
   text-align: center;
   font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 320;
-  font-size: 4.0em;
+  font-size: 3.5em;
   margin: 0 auto;
   line-height: 110%;
   display: block;
