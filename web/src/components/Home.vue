@@ -14,7 +14,7 @@
       </md-toolbar>
       <div class="md-toolbar-row md-layout md-alignment-center-center">
         <div class="banner-container">
-          <img src="/static/img/bg.jpg" alt="banner"></img>
+          <img class="bg" src="/static/img/bg.jpg" alt="banner"></img>
           <div class="subtitle">A platform for sharing localization microscopy data.<br>
             <md-button class="md-raised" href="https://github.com/imodpasteur/smlm-file-format/blob/master/README.md" target="_blank">SMLM file format</md-button>
             <md-button class="md-raised md-accent"  to="/viewer">SMLM viewer</md-button>
@@ -85,7 +85,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.bg {
+  min-height: 300px;
+}
 .subtitle {
   text-align: center;
   font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
@@ -120,9 +122,9 @@ export default {
 .legend {
   padding-left: 10px;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 960px) {
   .subtitle {
-    font-size: 1.3em;
+    font-size: 1.8em;
   }
 }
 .svg-icon{
